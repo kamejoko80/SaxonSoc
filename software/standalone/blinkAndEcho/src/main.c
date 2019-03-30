@@ -1,27 +1,33 @@
 #include <stdint.h>
-
 #include "saxon.h"
 
-volatile char globalC = 'b';
+#define UART_BASE ((volatile uint32_t*)(0xF0010000))
 
-void main() {
-	volatile uint32_t a = 1, b = 2, c = 3;
-	uint32_t result = 0;
-    GPIO_A->OUTPUT_ENABLE = 0x000000FF;
-    GPIO_A->OUTPUT = 0x00000000;
+void delay (uint32_t n) {
+    uint32_t i, j;
 
-    globalC+=1;
-    UART_A->DATA = globalC;
-
-    uint32_t counter = 0;
-    while(1){
-        if(counter++ == 1000){
-            GPIO_A->OUTPUT = GPIO_A->OUTPUT + 1;
-            counter = 0;
-        }
-        while(UART_A->STATUS >> 24){ //UART RX interrupt
-            UART_A->DATA = (UART_A->DATA) & 0xFF;
-        }
+    for(i = 0; i <= n; i++)
+    {
+        for(j = 0; j <= 120000; j++);
     }
 }
 
+void putchar(char c){
+    while((UART_BASE[1] & 0xFFFF0000) == 0);
+    UART_BASE[0] = c;
+}
+
+void main() {
+    GPIO_A->OUTPUT_ENABLE = 0x000000FF;
+    GPIO_A->OUTPUT = 0x00000000;
+    uint32_t counter = 0;
+
+    while(1){
+        GPIO_A->OUTPUT = 0x00000000;
+        putchar('0');
+        delay(4);
+        GPIO_A->OUTPUT = 0x000000FF;
+        delay(4);
+        putchar('1');
+    }
+}
