@@ -1,4 +1,6 @@
-ZEPHYR=../zephyr/zephyrSpinalHdl
+
+export RISCV_BIN=/opt/zephyr-sdk/riscv32-zephyr-elf/bin/riscv32-zephyr-elf-
+ZEPHYR=zephyr
 SHELL=/bin/bash
 NETLIST_DEPENDENCIES=$(shell find hardware/scala -type f)
 .ONESHELL:

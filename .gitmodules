@@ -1,0 +1,6 @@
+[submodule "zephyr"]
+	path = zephyr
+	url = https://github.com/SpinalHDL/zephyr.git
+[submodule "VexRiscv"]
+	path = VexRiscv
+	url = https://github.com/SpinalHDL/VexRiscv.git
