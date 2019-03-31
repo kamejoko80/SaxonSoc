@@ -3,11 +3,13 @@
 
 ## get source code
 
-git clone --recursive https://github.com/kamejoko80/SaxonSoc.git
+git clone --recurse-submodules https://github.com/kamejoko80/SaxonSoc.git
 
 cd SaxonSoc
 
 git checkout SaxonUp5kEvn
+
+git submodule update --init --recursive
 
 ## generate verilog
 
